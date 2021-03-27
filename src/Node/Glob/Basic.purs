@@ -1,17 +1,19 @@
 module Node.Glob.Basic
   ( expandGlobs
   , expandGlobsCwd
+  , expandGlobsWithStats
+  , expandGlobsWithStatsCwd
   ) where
 
 import Prelude
 
-import Control.Parallel (parTraverse, parallel, sequential)
+import Control.Parallel (parallel, sequential)
 import Data.Either (Either(..))
 import Data.Foldable (class Foldable, foldMap, foldr)
-import Data.FoldableWithIndex (class FoldableWithIndex, foldMapWithIndex)
+import Data.FoldableWithIndex (forWithIndex_)
 import Data.List (List(..), (:))
 import Data.List as List
-import Data.Map (SemigroupMap(..))
+import Data.Map (Map, SemigroupMap(..))
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.Monoid (guard)
@@ -20,9 +22,11 @@ import Data.Set as Set
 import Data.String (Pattern(..))
 import Data.String as String
 import Data.String.CodeUnits as SCU
-import Effect.Aff (Aff, catchError)
+import Effect.Aff (Aff, attempt, catchError)
 import Effect.Class (liftEffect)
+import Effect.Ref as Ref
 import Node.FS.Aff as FS
+import Node.FS.Stats (Stats)
 import Node.FS.Stats as Stats
 import Node.Path (FilePath)
 import Node.Path as Path
@@ -36,41 +40,50 @@ expandGlobsCwd globs = do
 
 -- | Expands globs relative to the provided directory.
 expandGlobs :: FilePath -> Array String -> Aff (Set FilePath)
-expandGlobs pwd =
-  map (fromPathWithSeparator Path.sep)
-    >>> Set.fromFoldable
-    >>> go pwd
-  where
-  go :: FilePath -> Set Glob' -> Aff (Set FilePath)
-  go cwd globs = do
-    let
-      fullPath p =
-        Path.concat [ cwd, p ]
+expandGlobs pwd = map Map.keys <<< expandGlobsWithStats pwd
 
-      toListing path =
-        fullPath path
-          # FS.stat
-          # map (Stats.isDirectory >>> { path, isDirectory: _ })
+-- | Expands globs relative to the current working directory, returning Stats.
+expandGlobsWithStatsCwd :: Array String -> Aff (Map FilePath Stats)
+expandGlobsWithStatsCwd globs = do
+  cwd <- liftEffect Process.cwd
+  expandGlobsWithStats cwd globs
 
-      prefix =
-        globs # partitionFoldMap \glob -> case fixedPrefix glob of
-          Nothing -> Left (Set.singleton glob)
-          Just pr -> Right pr
+-- | Expands globs relative to the provided directory, returning Stats.
+expandGlobsWithStats :: FilePath -> Array String -> Aff (Map FilePath Stats)
+expandGlobsWithStats pwd initGlobs = do
+  result <- liftEffect $ Ref.new Map.empty
+  let
+    insertMatch :: FilePath -> Stats -> Aff Unit
+    insertMatch path stat = liftEffect $ Ref.modify_ (Map.insert path stat) result
 
-    dirMatches <-
-      guard (not (Set.isEmpty prefix.left)) $ flip catchError mempty do
-        FS.readdir cwd
-          >>= parTraverse toListing
-          >>> map (List.fromFoldable >>> match prefix.left)
-    let
-      matches =
-        (prefix.right <> dirMatches) # partitionFoldMapWithIndex \path -> case _ of
-          Match -> Left (Set.singleton (fullPath path))
-          MatchMore gs -> Right (parallel (go (fullPath path) gs))
+    go :: FilePath -> Set Glob' -> Aff Unit
+    go cwd globs = do
+      let
+        prefix = globs # foldMap \glob ->
+          case fixedPrefix glob of
+            Nothing -> { left: Set.singleton glob, right: mempty }
+            Just pr -> { left: mempty, right: pr }
 
-    matches.right
-      # map (append matches.left)
-      # sequential
+      dirMatches <-
+        guard (not (Set.isEmpty prefix.left))
+          $ flip catchError mempty
+          $ match prefix.left <<< List.fromFoldable <$> FS.readdir cwd
+
+      sequential $ forWithIndex_ (prefix.right <> dirMatches) \path m -> parallel do
+        let fullPath = Path.concat [ cwd, path ]
+        attempt (FS.stat fullPath) >>= case m, _ of
+          MatchMore matchDir gs, Right stat | Stats.isDirectory stat -> do
+            when matchDir $ insertMatch fullPath stat
+            go fullPath gs
+          MatchMore true _, Right stat ->
+            insertMatch fullPath stat
+          Match, Right stat ->
+            insertMatch fullPath stat
+          _, _ ->
+            mempty
+
+  go pwd $ Set.fromFoldable $ map (fromPathWithSeparator Path.sep) initGlobs
+  liftEffect $ Ref.read result
 
 data Glob
   = GlobStar
@@ -95,50 +108,50 @@ fromPathWithSeparator sep = String.split (Pattern sep) >>> fromFoldable
 fixedPrefix :: Glob' -> Maybe (SemigroupMap String Match)
 fixedPrefix = case _ of
   GlobSegment (path : Nil) : glob | path /= "" ->
-    Just $ SemigroupMap $ Map.singleton path $ MatchMore $ Set.singleton glob
+    if List.null glob then
+      Just $ SemigroupMap $ Map.singleton path Match
+    else
+      Just $ SemigroupMap $ Map.singleton path $ MatchMore false (Set.singleton glob)
   _ ->
     Nothing
 
-type Listing =
-  { path :: String
-  , isDirectory :: Boolean
-  }
-
-match :: Set Glob' -> List Listing -> SemigroupMap String Match
-match globs = foldMap \lst ->
+match :: Set Glob' -> List FilePath -> SemigroupMap String Match
+match globs = foldMap \path ->
   globs
-    # foldMap (matchListing lst)
-    # foldMap (SemigroupMap <<< Map.singleton lst.path)
+    # foldMap (matchListing path)
+    # foldMap (SemigroupMap <<< Map.singleton path)
 
-data Match = Match | MatchMore (Set Glob')
+data Match = Match | MatchMore Boolean (Set Glob')
+
+isMatch :: Maybe Match -> Boolean
+isMatch = case _ of
+  Just Match -> true
+  _ -> false
 
 instance semigroupMatch :: Semigroup Match where
   append a b =
     case a of
-      MatchMore as ->
+      MatchMore am as ->
         case b of
-          MatchMore bs -> MatchMore (as <> bs)
+          MatchMore bm bs -> MatchMore (am || bm) (as <> bs)
           _ -> a
       Match ->
         case b of
-          MatchMore _ -> b
-          _ -> Match
+          MatchMore _ bs -> MatchMore true bs
+          _ -> a
 
-matchListing :: Listing -> Glob' -> Maybe Match
-matchListing lst@{ path, isDirectory } = case _ of
+matchListing :: FilePath -> Glob' -> Maybe Match
+matchListing path = case _ of
+  GlobStar : GlobStar : glob ->
+    matchListing path (GlobStar : glob)
   GlobStar : glob ->
-    if isDirectory then
-      Just $ MatchMore $ Set.fromFoldable [ glob, GlobStar : glob ]
-    else
-      matchListing lst glob
+    Just $ MatchMore (isMatch (matchListing path glob)) $ Set.fromFoldable [ glob, GlobStar : glob ]
   GlobSegment segment : glob ->
     if matchSegment path segment then
       if List.null glob then
         Just Match
-      else if isDirectory then
-        Just $ MatchMore $ Set.singleton glob
       else
-        Nothing
+        Just $ MatchMore false $ Set.singleton glob
     else
       Nothing
   Nil ->
@@ -163,35 +176,3 @@ matchSegment = go1
       case SCU.indexOf (Pattern p) str of
         Nothing -> false
         Just ix -> go2 (SCU.drop (ix + SCU.length p) str) ps
-
-partitionFoldMap
-  :: forall f a b c
-   . Foldable f
-  => Monoid b
-  => Monoid c
-  => (a -> Either b c)
-  -> f a
-  -> { left :: b, right :: c }
-partitionFoldMap k = foldMap go
-  where
-  go value = case k value of
-    Left left ->
-      { left, right: mempty }
-    Right right ->
-      { left: mempty, right }
-
-partitionFoldMapWithIndex
-  :: forall ix f a b c
-   . FoldableWithIndex ix f
-  => Monoid b
-  => Monoid c
-  => (ix -> a -> Either b c)
-  -> f a
-  -> { left :: b, right :: c }
-partitionFoldMapWithIndex k = foldMapWithIndex go
-  where
-  go ix value = case k ix value of
-    Left left ->
-      { left, right: mempty }
-    Right right ->
-      { left: mempty, right }
