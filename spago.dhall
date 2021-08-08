@@ -7,12 +7,18 @@ You can edit this file as you like.
   [ "aff"
   , "console"
   , "effect"
+  , "either"
+  , "foldable-traversable"
   , "lists"
   , "maybe"
+  , "node-fs"
   , "node-fs-aff"
   , "node-path"
   , "node-process"
   , "ordered-collections"
+  , "parallel"
+  , "prelude"
+  , "refs"
   , "strings"
   ]
 , packages = ./packages.dhall
