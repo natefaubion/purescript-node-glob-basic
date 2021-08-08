@@ -19,7 +19,7 @@ import Data.Maybe (Maybe(..))
 import Data.Monoid (guard)
 import Data.Set (Set)
 import Data.Set as Set
-import Data.String (Pattern(..))
+import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Data.String.CodeUnits as SCU
 import Effect.Aff (Aff, attempt, catchError)
@@ -82,8 +82,12 @@ expandGlobsWithStats pwd initGlobs = do
           _, _ ->
             mempty
 
-  go pwd $ Set.fromFoldable $ map (fromPathWithSeparator Path.sep) initGlobs
+  go pwd $ Set.fromFoldable $ map (fromPathWithSeparator Path.sep <<< fixupGlobPath) initGlobs
   liftEffect $ Ref.read result
+  where
+  fixupGlobPath glob
+    | Path.sep /= "/" = String.replaceAll (Pattern "/") (Replacement Path.sep) glob
+    | otherwise = glob
 
 data Glob
   = GlobStar
