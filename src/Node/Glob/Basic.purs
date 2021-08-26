@@ -7,7 +7,8 @@ module Node.Glob.Basic
 
 import Prelude
 
-import Control.Parallel (parallel, sequential)
+import Control.Parallel (parTraverse_, parallel, sequential)
+import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Foldable (class Foldable, foldMap, foldr)
 import Data.FoldableWithIndex (forWithIndex_)
@@ -22,8 +23,11 @@ import Data.Set as Set
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Data.String.CodeUnits as SCU
+import Data.Tuple (Tuple(..), fst)
 import Effect.Aff (Aff, attempt, catchError)
 import Effect.Class (liftEffect)
+import Effect.Class.Console (logShow)
+import Effect.Class.Console as Console
 import Effect.Ref as Ref
 import Node.FS.Aff as FS
 import Node.FS.Stats (Stats)
@@ -82,12 +86,25 @@ expandGlobsWithStats pwd initGlobs = do
           _, _ ->
             mempty
 
-  go pwd $ Set.fromFoldable $ map (fromPathWithSeparator Path.sep <<< fixupGlobPath) initGlobs
+    globsWithDir =
+      initGlobs
+        # map (rootOrRelative pwd <<< fromPathWithSeparator Path.sep <<< fixupGlobPath)
+        # Map.fromFoldableWith (<>)
+
+  sequential $ forWithIndex_ globsWithDir \dir globs -> parallel do
+    go dir globs
+
   liftEffect $ Ref.read result
-  where
-  fixupGlobPath glob
-    | Path.sep /= "/" = String.replaceAll (Pattern "/") (Replacement Path.sep) glob
-    | otherwise = glob
+
+fixupGlobPath :: String -> String
+fixupGlobPath glob
+  | Path.sep /= "/" = String.replaceAll (Pattern "/") (Replacement Path.sep) glob
+  | otherwise = glob
+
+rootOrRelative :: FilePath -> Glob' -> Tuple FilePath (Set Glob')
+rootOrRelative pwd = case _ of
+  GlobSegment ("" : Nil) : glob -> Tuple Path.sep (Set.singleton glob)
+  glob -> Tuple pwd (Set.singleton glob)
 
 data Glob
   = GlobStar
