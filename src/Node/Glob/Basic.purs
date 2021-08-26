@@ -7,8 +7,7 @@ module Node.Glob.Basic
 
 import Prelude
 
-import Control.Parallel (parTraverse_, parallel, sequential)
-import Data.Array as Array
+import Control.Parallel (parallel, sequential)
 import Data.Either (Either(..))
 import Data.Foldable (class Foldable, foldMap, foldr)
 import Data.FoldableWithIndex (forWithIndex_)
@@ -23,11 +22,9 @@ import Data.Set as Set
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Data.String.CodeUnits as SCU
-import Data.Tuple (Tuple(..), fst)
+import Data.Tuple (Tuple(..))
 import Effect.Aff (Aff, attempt, catchError)
 import Effect.Class (liftEffect)
-import Effect.Class.Console (logShow)
-import Effect.Class.Console as Console
 import Effect.Ref as Ref
 import Node.FS.Aff as FS
 import Node.FS.Stats (Stats)
