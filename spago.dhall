@@ -5,6 +5,7 @@ You can edit this file as you like.
 { name = "my-project"
 , dependencies =
   [ "aff"
+  , "arrays"
   , "console"
   , "effect"
   , "either"
@@ -20,6 +21,7 @@ You can edit this file as you like.
   , "prelude"
   , "refs"
   , "strings"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
