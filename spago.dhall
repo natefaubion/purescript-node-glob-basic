@@ -1,8 +1,6 @@
-{-
-Welcome to a Spago project!
-You can edit this file as you like.
--}
-{ name = "my-project"
+{ name = "node-glob-basic"
+, license = "MIT"
+, repository = "https://github.com/natefaubion/purescript-node-glob-basic.git"
 , dependencies =
   [ "aff"
   , "console"
