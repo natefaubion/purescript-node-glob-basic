@@ -10,7 +10,6 @@
   , "lists"
   , "maybe"
   , "node-fs"
-  , "node-fs-aff"
   , "node-path"
   , "node-process"
   , "ordered-collections"
