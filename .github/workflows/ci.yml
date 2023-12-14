@@ -21,10 +21,10 @@ jobs:
         run: npm install spago@next
 
       - name: Build source
-        run: ./node_modules/.bin/spago build
+        run: npx spago build
 
       - name: Run tests
-        run: ./node_modules/.bin/spago test --offline
+        run: npx spago test --offline
 
       - name: Verify formatting
         run: purs-tidy check src test
