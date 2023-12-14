@@ -16,7 +16,9 @@ jobs:
         with:
           purescript: "0.15.13"
           purs-tidy: "0.10.1"
-          spago: "latest"
+
+      - name: Install spago next
+        run: npm install -g spago@next
 
       - name: Build source
         run: spago build
