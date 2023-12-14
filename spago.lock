@@ -1,0 +1,813 @@
+workspace:
+  packages:
+    node-glob-basic:
+      path: ./
+      needed_by: []
+      dependencies:
+        - aff: ">=7.1.0 <8.0.0"
+        - console: ">=6.1.0 <7.0.0"
+        - effect: ">=4.0.0 <5.0.0"
+        - either: ">=6.1.0 <7.0.0"
+        - foldable-traversable: ">=6.0.0 <7.0.0"
+        - lists: ">=7.0.0 <8.0.0"
+        - maybe: ">=6.0.0 <7.0.0"
+        - node-fs: ">=9.1.0 <10.0.0"
+        - node-path: ">=5.0.0 <6.0.0"
+        - node-process: ">=11.2.0 <12.0.0"
+        - ordered-collections: ">=3.1.1 <4.0.0"
+        - parallel: ">=6.0.0 <7.0.0"
+        - prelude: ">=6.0.1 <7.0.0"
+        - refs: ">=6.0.0 <7.0.0"
+        - strings: ">=6.0.1 <7.0.0"
+        - tuples: ">=7.0.0 <8.0.0"
+      test_dependencies: []
+  extra_packages: {}
+packages:
+  aff:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.1.0
+      integrity: sha256-7hOC6uQO9XBAI5FD8F33ChLjFAiZVfd4BJMqlMh7TNU=
+      dependencies:
+        - arrays
+        - bifunctors
+        - control
+        - datetime
+        - effect
+        - either
+        - exceptions
+        - foldable-traversable
+        - functions
+        - maybe
+        - newtype
+        - parallel
+        - prelude
+        - refs
+        - tailrec
+        - transformers
+        - unsafe-coerce
+  arraybuffer-types:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 3.0.2
+      integrity: sha256-mQKokysYVkooS4uXbO+yovmV/s8b138Ws3zQvOwIHRA=
+      dependencies: []
+  arrays:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.3.0
+      integrity: sha256-tmcklBlc/muUtUfr9RapdCPwnlQeB3aSrC4dK85gQlc=
+      dependencies:
+        - bifunctors
+        - control
+        - foldable-traversable
+        - functions
+        - maybe
+        - nonempty
+        - partial
+        - prelude
+        - safe-coerce
+        - st
+        - tailrec
+        - tuples
+        - unfoldable
+        - unsafe-coerce
+  bifunctors:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-/gZwC9YhNxZNQpnHa5BIYerCGM2jeX9ukZiEvYxm5Nw=
+      dependencies:
+        - const
+        - either
+        - newtype
+        - prelude
+        - tuples
+  console:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.1.0
+      integrity: sha256-CxmAzjgyuGDmt9FZW51VhV6rBPwR6o0YeKUzA9rSzcM=
+      dependencies:
+        - effect
+        - prelude
+  const:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-tNrxDW8D8H4jdHE2HiPzpLy08zkzJMmGHdRqt5BQuTc=
+      dependencies:
+        - invariant
+        - newtype
+        - prelude
+  contravariant:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-TP+ooAp3vvmdjfQsQJSichF5B4BPDHp3wAJoWchip6c=
+      dependencies:
+        - const
+        - either
+        - newtype
+        - prelude
+        - tuples
+  control:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-sH7Pg9E96JCPF9PIA6oQ8+BjTyO/BH1ZuE/bOcyj4Jk=
+      dependencies:
+        - newtype
+        - prelude
+  datetime:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.1.0
+      integrity: sha256-g/5X5BBegQWLpI9IWD+sY6mcaYpzzlW5lz5NBzaMtyI=
+      dependencies:
+        - bifunctors
+        - control
+        - either
+        - enums
+        - foldable-traversable
+        - functions
+        - gen
+        - integers
+        - lists
+        - maybe
+        - newtype
+        - numbers
+        - ordered-collections
+        - partial
+        - prelude
+        - tuples
+  distributive:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-HTDdmEnzigMl+02SJB88j+gAXDx9VKsbvR4MJGDPbOQ=
+      dependencies:
+        - identity
+        - newtype
+        - prelude
+        - tuples
+        - type-equality
+  effect:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 4.0.0
+      integrity: sha256-eBtZu+HZcMa5HilvI6kaDyVX3ji8p0W9MGKy2K4T6+M=
+      dependencies:
+        - prelude
+  either:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.1.0
+      integrity: sha256-6hgTPisnMWVwQivOu2PKYcH8uqjEOOqDyaDQVUchTpY=
+      dependencies:
+        - control
+        - invariant
+        - maybe
+        - prelude
+  enums:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.1
+      integrity: sha256-HWaD73JFLorc4A6trKIRUeDMdzE+GpkJaEOM1nTNkC8=
+      dependencies:
+        - control
+        - either
+        - gen
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tuples
+        - unfoldable
+  exceptions:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-y/xTAEIZIARCE+50/u1di0ncebJ+CIwNOLswyOWzMTw=
+      dependencies:
+        - effect
+        - either
+        - maybe
+        - prelude
+  exists:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-A0JQHpTfo1dNOj9U5/Fd3xndlRSE0g2IQWOGor2yXn8=
+      dependencies:
+        - unsafe-coerce
+  foldable-traversable:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-fLeqRYM4jUrZD5H4WqcwUgzU7XfYkzO4zhgtNc3jcWM=
+      dependencies:
+        - bifunctors
+        - const
+        - control
+        - either
+        - functors
+        - identity
+        - maybe
+        - newtype
+        - orders
+        - prelude
+        - tuples
+  foreign:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.0.0
+      integrity: sha256-1ORiqoS3HW+qfwSZAppHPWy4/6AQysxZ2t29jcdUMNA=
+      dependencies:
+        - either
+        - functions
+        - identity
+        - integers
+        - lists
+        - maybe
+        - prelude
+        - strings
+        - transformers
+  foreign-object:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 4.1.0
+      integrity: sha256-q24okj6mT+yGHYQ+ei/pYPj5ih6sTbu7eDv/WU56JVo=
+      dependencies:
+        - arrays
+        - foldable-traversable
+        - functions
+        - gen
+        - lists
+        - maybe
+        - prelude
+        - st
+        - tailrec
+        - tuples
+        - typelevel-prelude
+        - unfoldable
+  functions:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-adMyJNEnhGde2unHHAP79gPtlNjNqzgLB8arEOn9hLI=
+      dependencies:
+        - prelude
+  functors:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 5.0.0
+      integrity: sha256-zfPWWYisbD84MqwpJSZFlvM6v86McM68ob8p9s27ywU=
+      dependencies:
+        - bifunctors
+        - const
+        - contravariant
+        - control
+        - distributive
+        - either
+        - invariant
+        - maybe
+        - newtype
+        - prelude
+        - profunctor
+        - tuples
+        - unsafe-coerce
+  gen:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 4.0.0
+      integrity: sha256-f7yzAXWwr+xnaqEOcvyO3ezKdoes8+WXWdXIHDBCAPI=
+      dependencies:
+        - either
+        - foldable-traversable
+        - identity
+        - maybe
+        - newtype
+        - nonempty
+        - prelude
+        - tailrec
+        - tuples
+        - unfoldable
+  identity:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-4wY0XZbAksjY6UAg99WkuKyJlQlWAfTi2ssadH0wVMY=
+      dependencies:
+        - control
+        - invariant
+        - newtype
+        - prelude
+  integers:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-sf+sK26R1hzwl3NhXR7WAu9zCDjQnfoXwcyGoseX158=
+      dependencies:
+        - maybe
+        - numbers
+        - prelude
+  invariant:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-RGWWyYrz0Hs1KjPDA+87Kia67ZFBhfJ5lMGOMCEFoLo=
+      dependencies:
+        - control
+        - prelude
+  js-date:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 8.0.0
+      integrity: sha256-6TVF4DWg5JL+jRAsoMssYw8rgOVALMUHT1CuNZt8NRo=
+      dependencies:
+        - datetime
+        - effect
+        - exceptions
+        - foreign
+        - integers
+        - now
+  lazy:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-lMsfFOnlqfe4KzRRiW8ot5ge6HtcU3Eyh2XkXcP5IgU=
+      dependencies:
+        - control
+        - foldable-traversable
+        - invariant
+        - prelude
+  lists:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.0.0
+      integrity: sha256-EKF15qYqucuXP2lT/xPxhqy58f0FFT6KHdIB/yBOayI=
+      dependencies:
+        - bifunctors
+        - control
+        - foldable-traversable
+        - lazy
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tailrec
+        - tuples
+        - unfoldable
+  maybe:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-5cCIb0wPwbat2PRkQhUeZO0jcAmf8jCt2qE0wbC3v2Q=
+      dependencies:
+        - control
+        - invariant
+        - newtype
+        - prelude
+  newtype:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 5.0.0
+      integrity: sha256-gdrQu8oGe9eZE6L3wOI8ql/igOg+zEGB5ITh2g+uttw=
+      dependencies:
+        - prelude
+        - safe-coerce
+  node-buffer:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 9.0.0
+      integrity: sha256-PWE2DJ5ruBLCmeA/fUiuySEFmUJ/VuRfyrnCuVZBlu4=
+      dependencies:
+        - arraybuffer-types
+        - effect
+        - maybe
+        - nullable
+        - st
+        - unsafe-coerce
+  node-event-emitter:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 3.0.0
+      integrity: sha256-Qw0MjsT4xRH2j2i4K8JmRjcMKnH5z1Cw39t00q4LE4w=
+      dependencies:
+        - effect
+        - either
+        - functions
+        - maybe
+        - nullable
+        - prelude
+        - unsafe-coerce
+  node-fs:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 9.1.0
+      integrity: sha256-TzhvGdrwcM0bazDvrWSqh+M/H8GKYf1Na6aGm2Qg4+c=
+      dependencies:
+        - datetime
+        - effect
+        - either
+        - enums
+        - exceptions
+        - functions
+        - integers
+        - js-date
+        - maybe
+        - node-buffer
+        - node-path
+        - node-streams
+        - nullable
+        - partial
+        - prelude
+        - strings
+        - unsafe-coerce
+  node-path:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 5.0.0
+      integrity: sha256-pd82nQ+2l5UThzaxPdKttgDt7xlsgIDLpPG0yxDEdyE=
+      dependencies:
+        - effect
+  node-process:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 11.2.0
+      integrity: sha256-+2MQDYChjGbVbapCyJtuWYwD41jk+BntF/kcOTKBMVs=
+      dependencies:
+        - effect
+        - foreign
+        - foreign-object
+        - maybe
+        - node-event-emitter
+        - node-streams
+        - posix-types
+        - prelude
+        - unsafe-coerce
+  node-streams:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 9.0.0
+      integrity: sha256-2n6dq7YWleTDmD1Kur/ul7Cn08IvWrScgPf+0PgX2TQ=
+      dependencies:
+        - aff
+        - effect
+        - either
+        - exceptions
+        - node-buffer
+        - node-event-emitter
+        - nullable
+        - prelude
+  nonempty:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.0.0
+      integrity: sha256-54ablJZUHGvvlTJzi3oXyPCuvY6zsrWJuH/dMJ/MFLs=
+      dependencies:
+        - control
+        - foldable-traversable
+        - maybe
+        - prelude
+        - tuples
+        - unfoldable
+  now:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-xZ7x37ZMREfs6GCDw/h+FaKHV/3sPWmtqBZRGTxybQY=
+      dependencies:
+        - datetime
+        - effect
+  nullable:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-yiGBVl3AD+Guy4kNWWeN+zl1gCiJK+oeIFtZtPCw4+o=
+      dependencies:
+        - effect
+        - functions
+        - maybe
+  numbers:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 9.0.1
+      integrity: sha256-/9M6aeMDBdB4cwYDeJvLFprAHZ49EbtKQLIJsneXLIk=
+      dependencies:
+        - functions
+        - maybe
+  ordered-collections:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 3.1.1
+      integrity: sha256-boSYHmlz4aSbwsNN4VxiwCStc0t+y1F7BXmBS+1JNtI=
+      dependencies:
+        - arrays
+        - foldable-traversable
+        - gen
+        - lists
+        - maybe
+        - partial
+        - prelude
+        - st
+        - tailrec
+        - tuples
+        - unfoldable
+  orders:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-nBA0g3/ai0euH8q9pSbGqk53W2q6agm/dECZTHcoink=
+      dependencies:
+        - newtype
+        - prelude
+  parallel:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-VJbkGD0rAKX+NUEeBJbYJ78bEKaZbgow+QwQEfPB6ko=
+      dependencies:
+        - control
+        - effect
+        - either
+        - foldable-traversable
+        - functors
+        - maybe
+        - newtype
+        - prelude
+        - profunctor
+        - refs
+        - transformers
+  partial:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 4.0.0
+      integrity: sha256-fwXerld6Xw1VkReh8yeQsdtLVrjfGiVuC5bA1Wyo/J4=
+      dependencies: []
+  posix-types:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-ZfFz8RR1lee/o/Prccyeut3Q+9tYd08mlR72sIh6GzA=
+      dependencies:
+        - maybe
+        - prelude
+  prelude:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.1
+      integrity: sha256-o8p6SLYmVPqzXZhQFd2hGAWEwBoXl1swxLG/scpJ0V0=
+      dependencies: []
+  profunctor:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-99NzxFgTr4CGlCSRYG1kShL+JhYbihhHtbOk1/0R5zI=
+      dependencies:
+        - control
+        - distributive
+        - either
+        - exists
+        - invariant
+        - newtype
+        - prelude
+        - tuples
+  refs:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-Vgwne7jIbD3ZMoLNNETLT8Litw6lIYo3MfYNdtYWj9s=
+      dependencies:
+        - effect
+        - prelude
+  safe-coerce:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 2.0.0
+      integrity: sha256-a1ibQkiUcbODbLE/WAq7Ttbbh9ex+x33VCQ7GngKudU=
+      dependencies:
+        - unsafe-coerce
+  st:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.2.0
+      integrity: sha256-z9X0WsOUlPwNx9GlCC+YccCyz8MejC8Wb0C4+9fiBRY=
+      dependencies:
+        - partial
+        - prelude
+        - tailrec
+        - unsafe-coerce
+  strings:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.1
+      integrity: sha256-WssD3DbX4OPzxSdjvRMX0yvc9+pS7n5gyPv5I2Trb7k=
+      dependencies:
+        - arrays
+        - control
+        - either
+        - enums
+        - foldable-traversable
+        - gen
+        - integers
+        - maybe
+        - newtype
+        - nonempty
+        - partial
+        - prelude
+        - tailrec
+        - tuples
+        - unfoldable
+        - unsafe-coerce
+  tailrec:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.1.0
+      integrity: sha256-Xx19ECVDRrDWpz9D2GxQHHV89vd61dnXxQm0IcYQHGk=
+      dependencies:
+        - bifunctors
+        - effect
+        - either
+        - identity
+        - maybe
+        - partial
+        - prelude
+        - refs
+  transformers:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-Pzw40HjthX77tdPAYzjx43LK3X5Bb7ZspYAp27wksFA=
+      dependencies:
+        - control
+        - distributive
+        - effect
+        - either
+        - exceptions
+        - foldable-traversable
+        - identity
+        - lazy
+        - maybe
+        - newtype
+        - prelude
+        - tailrec
+        - tuples
+        - unfoldable
+  tuples:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.0.0
+      integrity: sha256-1rXgTomes9105BjgXqIw0FL6Fz1lqqUTLWOumhWec1M=
+      dependencies:
+        - control
+        - invariant
+        - prelude
+  type-equality:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 4.0.1
+      integrity: sha256-Hs9D6Y71zFi/b+qu5NSbuadUQXe5iv5iWx0226vOHUw=
+      dependencies: []
+  typelevel-prelude:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 7.0.0
+      integrity: sha256-uFF2ph+vHcQpfPuPf2a3ukJDFmLhApmkpTMviHIWgJM=
+      dependencies:
+        - prelude
+        - type-equality
+  unfoldable:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-JtikvJdktRap7vr/K4ITlxUX1QexpnqBq0G/InLr6eg=
+      dependencies:
+        - foldable-traversable
+        - maybe
+        - partial
+        - prelude
+        - tuples
+  unsafe-coerce:
+    needed_by:
+      - node-glob-basic
+    package:
+      type: registry
+      version: 6.0.0
+      integrity: sha256-IqIYW4Vkevn8sI+6aUwRGvd87tVL36BBeOr0cGAE7t0=
+      dependencies: []
