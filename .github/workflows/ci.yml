@@ -18,13 +18,13 @@ jobs:
           purs-tidy: "0.10.1"
 
       - name: Install spago next
-        run: npm install -g spago@next
+        run: npm install spago@next
 
       - name: Build source
-        run: spago build
+        run: ./node_modules/.bin/spago build
 
       - name: Run tests
-        run: spago test --offline
+        run: ./node_modules/.bin/spago test --offline
 
       - name: Verify formatting
         run: purs-tidy check src test
