@@ -14,15 +14,17 @@ jobs:
 
       - uses: purescript-contrib/setup-purescript@main
         with:
-          purescript: "0.15.0"
-          purs-tidy: "0.8.0"
-          spago: "0.20.9"
+          purescript: "0.15.13"
+          purs-tidy: "0.10.1"
+
+      - name: Install spago next
+        run: npm install spago@next
 
       - name: Build source
-        run: spago build
+        run: npx spago build
 
       - name: Run tests
-        run: spago test --no-install
+        run: npx spago test --offline
 
       - name: Verify formatting
         run: purs-tidy check src test
