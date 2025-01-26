@@ -2,7 +2,7 @@ package:
   name: node-glob-basic
   description: "A very basic glob library. No NPM dependencies."
   publish:
-    version: 1.3.0
+    version: 2.0.0
     license: MIT
     location:
       githubOwner: natefaubion
@@ -10,17 +10,17 @@ package:
   build:
     strict: true
   dependencies:
-    - aff: ">=7.1.0 <8.0.0"
+    - aff: ">=8.0.0 <9.0.0"
     - effect: ">=4.0.0 <5.0.0"
     - either: ">=6.1.0 <7.0.0"
     - foldable-traversable: ">=6.0.0 <7.0.0"
     - lists: ">=7.0.0 <8.0.0"
     - maybe: ">=6.0.0 <7.0.0"
-    - node-fs: ">=9.1.0 <10.0.0"
-    - node-path: ">=5.0.0 <6.0.0"
+    - node-fs: ">=9.2.0 <10.0.0"
+    - node-path: ">=5.0.1 <6.0.0"
     - node-process: ">=11.2.0 <12.0.0"
-    - ordered-collections: ">=3.1.1 <4.0.0"
-    - parallel: ">=6.0.0 <7.0.0"
+    - ordered-collections: ">=3.2.0 <4.0.0"
+    - parallel: ">=7.0.0 <8.0.0"
     - prelude: ">=6.0.1 <7.0.0"
     - refs: ">=6.0.0 <7.0.0"
     - strings: ">=6.0.1 <7.0.0"
@@ -28,5 +28,5 @@ package:
   test:
     main: Test.Main
     dependencies:
-      - console: ">=6.1.0 <7.0.0"
+      - console
 workspace: {}
