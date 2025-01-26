@@ -10,21 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: purescript-contrib/setup-purescript@main
         with:
-          purescript: "0.15.13"
-          purs-tidy: "0.10.1"
+          purescript: "0.15.15"
+          purs-tidy: "latest"
+          spago: "unstable"
 
-      - name: Install spago next
-        run: npm install spago@next
+      - name: Cache PureScript dependencies
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-spago-${{ hashFiles('**/spago.lock') }}
+          path: |
+            .spago
+            output
 
       - name: Build source
-        run: npx spago build
+        run: spago build --pure --pedantic-packages
 
       - name: Run tests
-        run: npx spago test --offline
+        run: spago test --pure --offline
 
       - name: Verify formatting
         run: purs-tidy check src test
